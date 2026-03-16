@@ -1,0 +1,36 @@
+<div class="page-container fade-in">
+    <h1 class="page-title">📋 My Orders</h1>
+
+    <div *ngIf="loading" class="loading-state">
+        <div class="spinner"></div>
+    </div>
+
+    <div *ngIf="!loading && orders.length === 0" class="empty-state">
+        <div class="icon">📦</div>
+        <h3>No orders yet</h3>
+        <p>Place your first order and it will appear here</p>
+        <a routerLink="/home" class="btn btn-primary">Order Now</a>
+    </div>
+
+    <div class="orders-list" *ngIf="!loading">
+        <div *ngFor="let order of orders" class="order-card card">
+            <div class="order-header">
+                <div>
+                    <h3>{{order.restaurantName}}</h3>
+                    <p class="order-date">{{order.createdAt | date:'medium'}}</p>
+                </div>
+                <span class="status-badge" [ngClass]="getStatusClass(order.status)">{{order.status}}</span>
+            </div>
+            <div class="order-items">
+                <div *ngFor="let item of order.items" class="order-item">
+                    <span>{{item.name}} × {{item.quantity}}</span>
+                    <span>₹{{item.price * item.quantity}}</span>
+                </div>
+            </div>
+            <div class="order-footer">
+                <span class="order-address">📍 {{order.deliveryAddress}}</span>
+                <span class="order-total">Total: ₹{{order.totalAmount}}</span>
+            </div>
+        </div>
+    </div>
+</div>

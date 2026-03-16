@@ -1,0 +1,38 @@
+<div class="page-container fade-in">
+    <h1 class="page-title">📦 Checkout</h1>
+    <div class="checkout-layout" *ngIf="cart && cart.items.length > 0">
+        <div class="checkout-form card">
+            <h2>Delivery Details</h2>
+            <div class="alert alert-error" *ngIf="error">{{error}}</div>
+            <div class="form-group">
+                <label for="address">Delivery Address</label>
+                <textarea id="address" [(ngModel)]="deliveryAddress" rows="3"
+                    placeholder="Enter full delivery address..." required></textarea>
+            </div>
+            <div class="form-group">
+                <label for="payment">Payment Method</label>
+                <select id="payment" [(ngModel)]="paymentMethod">
+                    <option value="Cash on Delivery">Cash on Delivery</option>
+                    <option value="Online">Online Payment</option>
+                </select>
+            </div>
+            <button class="btn btn-primary btn-full" (click)="placeOrder()" [disabled]="loading">
+                {{loading ? 'Placing Order...' : '🎉 Place Order — ₹' + total}}
+            </button>
+        </div>
+
+        <div class="order-summary card">
+            <h2>Order Summary</h2>
+            <div class="summary-items">
+                <div *ngFor="let item of cart.items" class="summary-item">
+                    <span class="item-name">{{item.name}} × {{item.quantity}}</span>
+                    <span class="item-total">₹{{item.price * item.quantity}}</span>
+                </div>
+            </div>
+            <div class="summary-total">
+                <span>Total</span>
+                <span>₹{{total}}</span>
+            </div>
+        </div>
+    </div>
+</div>

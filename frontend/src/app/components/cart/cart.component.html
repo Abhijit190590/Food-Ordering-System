@@ -1,0 +1,54 @@
+<div class="page-container fade-in">
+    <h1 class="page-title">🛒 Your Cart</h1>
+
+    <div *ngIf="loading" class="loading-state">
+        <div class="spinner"></div>
+    </div>
+
+    <div *ngIf="!loading && (!cart || cart.items.length === 0)" class="empty-state">
+        <div class="icon">🛒</div>
+        <h3>Your cart is empty</h3>
+        <p>Add some delicious items from our restaurants</p>
+        <a routerLink="/home" class="btn btn-primary">Browse Restaurants</a>
+    </div>
+
+    <div *ngIf="cart && cart.items.length > 0" class="cart-content">
+        <div class="restaurant-badge" *ngIf="cart.restaurant">
+            <span>📍 Ordering from: <strong>{{cart.restaurant.name || 'Restaurant'}}</strong></span>
+        </div>
+
+        <div class="cart-items">
+            <div *ngFor="let item of cart.items" class="cart-item card">
+                <div class="item-info">
+                    <h3>{{item.name}}</h3>
+                    <p class="item-price-single">₹{{item.price}} each</p>
+                </div>
+                <div class="item-controls">
+                    <button class="qty-btn" (click)="updateQty(item, -1)">−</button>
+                    <span class="qty-value">{{item.quantity}}</span>
+                    <button class="qty-btn" (click)="updateQty(item, 1)">+</button>
+                </div>
+                <div class="item-total">₹{{item.price * item.quantity}}</div>
+            </div>
+        </div>
+
+        <div class="cart-summary card">
+            <div class="summary-row">
+                <span>Subtotal</span>
+                <span>₹{{total}}</span>
+            </div>
+            <div class="summary-row">
+                <span>Delivery Fee</span>
+                <span class="free">FREE</span>
+            </div>
+            <div class="summary-row total-row">
+                <span>Total</span>
+                <span>₹{{total}}</span>
+            </div>
+            <div class="cart-actions">
+                <button class="btn btn-danger btn-sm" (click)="clearCart()">Clear Cart</button>
+                <button class="btn btn-primary" (click)="goToCheckout()">Proceed to Checkout →</button>
+            </div>
+        </div>
+    </div>
+</div>

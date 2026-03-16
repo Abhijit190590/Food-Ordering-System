@@ -1,0 +1,58 @@
+<div class="page-container fade-in" *ngIf="restaurant">
+    <div class="restaurant-header">
+        <img [src]="restaurant.imageUrl || 'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=800&h=300&fit=crop'"
+            class="header-img" [alt]="restaurant.name">
+        <div class="header-overlay">
+            <h1>{{restaurant.name}}</h1>
+            <div class="header-meta">
+                <span>{{restaurant.cuisineType}}</span>
+                <span>⭐ {{restaurant.rating}}</span>
+                <span>🕐 {{restaurant.deliveryTime}}</span>
+                <span>💰 Min ₹{{restaurant.minOrder}}</span>
+            </div>
+            <p class="header-desc" *ngIf="restaurant.description">{{restaurant.description}}</p>
+        </div>
+    </div>
+
+    <div *ngIf="loading" class="loading-state">
+        <div class="spinner"></div>
+    </div>
+
+    <div *ngIf="!loading && menuItems.length === 0" class="empty-state">
+        <div class="icon">📋</div>
+        <h3>No menu items yet</h3>
+        <p>Check back soon!</p>
+    </div>
+
+    <div *ngFor="let cat of categories" class="menu-section">
+        <h2 class="section-title">{{cat}}</h2>
+        <div class="menu-grid">
+            <div *ngFor="let item of getItemsByCategory(cat)" class="menu-item card">
+                <div class="item-img" *ngIf="item.imageUrl">
+                    <img [src]="item.imageUrl" [alt]="item.name">
+                </div>
+                <div class="item-body">
+                    <div class="item-header">
+                        <span class="tag" [class.tag-veg]="item.isVeg" [class.tag-nonveg]="!item.isVeg">
+                            {{item.isVeg ? '🟢 Veg' : '🔴 Non-Veg'}}
+                        </span>
+                    </div>
+                    <h3 class="item-name">{{item.name}}</h3>
+                    <p class="item-desc" *ngIf="item.description">{{item.description}}</p>
+                    <div class="item-footer">
+                        <span class="item-price">₹{{item.price}}</span>
+                        <button class="btn btn-primary btn-sm" (click)="addToCart(item)"
+                            [disabled]="!authService.isLoggedIn || addingId === item._id"
+                            [class.added]="addingId === item._id">
+                            {{addingId === item._id ? '✓ Added' : '+ Add'}}
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div *ngIf="!authService.isLoggedIn" class="login-prompt">
+        <p>Please <a routerLink="/login">login</a> to add items to your cart</p>
+    </div>
+</div>

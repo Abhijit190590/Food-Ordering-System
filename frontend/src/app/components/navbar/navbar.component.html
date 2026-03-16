@@ -1,0 +1,35 @@
+<nav class="navbar">
+    <div class="nav-container">
+        <a routerLink="/home" class="brand">
+            <span class="brand-icon">🍔</span>
+            <span class="brand-name">FoodExpress</span>
+        </a>
+
+        <div class="nav-links" [class.open]="menuOpen">
+            <a routerLink="/home" routerLinkActive="active" (click)="menuOpen=false">Home</a>
+            <ng-container *ngIf="authService.isLoggedIn">
+                <a routerLink="/orders" routerLinkActive="active" (click)="menuOpen=false">My Orders</a>
+                <a routerLink="/cart" routerLinkActive="active" class="cart-link" (click)="menuOpen=false">
+                    🛒 Cart
+                    <span class="cart-badge" *ngIf="cartCount > 0">{{cartCount}}</span>
+                </a>
+                <ng-container *ngIf="authService.isAdmin">
+                    <a routerLink="/admin/add-restaurant" routerLinkActive="active" (click)="menuOpen=false">Add
+                        Restaurant</a>
+                    <a routerLink="/admin/add-menu-item" routerLinkActive="active" (click)="menuOpen=false">Add Item</a>
+                </ng-container>
+                <button class="btn-logout" (click)="logout(); menuOpen=false">Logout</button>
+                <span class="user-name">👤 {{currentUser?.name}}</span>
+            </ng-container>
+            <ng-container *ngIf="!authService.isLoggedIn">
+                <a routerLink="/login" routerLinkActive="active" (click)="menuOpen=false">Login</a>
+                <a routerLink="/register" routerLinkActive="active" class="btn-signup" (click)="menuOpen=false">Sign
+                    Up</a>
+            </ng-container>
+        </div>
+
+        <button class="hamburger" (click)="toggleMenu()">
+            <span></span><span></span><span></span>
+        </button>
+    </div>
+</nav>

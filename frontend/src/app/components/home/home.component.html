@@ -1,0 +1,40 @@
+<div class="page-container fade-in">
+    <div class="hero-section">
+        <h1 class="hero-title">Discover <span class="accent">Delicious</span> Food</h1>
+        <p class="hero-subtitle">Order from the best restaurants near you</p>
+        <div class="search-bar">
+            <span class="search-icon">🔍</span>
+            <input type="text" [(ngModel)]="searchTerm" (input)="onSearch()"
+                placeholder="Search restaurants or cuisines..." id="search-input">
+        </div>
+    </div>
+
+    <div *ngIf="loading" class="loading-state">
+        <div class="spinner"></div>
+        <p>Loading restaurants...</p>
+    </div>
+
+    <div *ngIf="!loading && filteredRestaurants.length === 0" class="empty-state">
+        <div class="icon">🍽️</div>
+        <h3>No restaurants found</h3>
+        <p>Try a different search or check back later</p>
+    </div>
+
+    <div class="restaurant-grid" *ngIf="!loading">
+        <a *ngFor="let r of filteredRestaurants" class="card restaurant-card" [routerLink]="['/restaurant', r._id]">
+            <div class="card-img">
+                <img [src]="r.imageUrl || 'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=400&h=250&fit=crop'"
+                    [alt]="r.name">
+                <span class="rating-badge">⭐ {{r.rating}}</span>
+            </div>
+            <div class="card-body">
+                <h3 class="card-title">{{r.name}}</h3>
+                <p class="card-cuisine">{{r.cuisineType}}</p>
+                <div class="card-meta">
+                    <span>🕐 {{r.deliveryTime}}</span>
+                    <span>💰 Min ₹{{r.minOrder}}</span>
+                </div>
+            </div>
+        </a>
+    </div>
+</div>
