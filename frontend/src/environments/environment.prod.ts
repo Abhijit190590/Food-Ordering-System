@@ -1,4 +1,4 @@
 export const environment = {
     production: true,
-    apiUrl: 'https://food-ordering-api.onrender.com/api'
+    apiUrl: 'https://food-ordering-system-o6uk.onrender.com/api'
 };
