@@ -22,12 +22,20 @@ app.get('/', (req, res) => {
 });
 
 // Connect to MongoDB
+const MONGO_URI = process.env.MONGO_URI;
+if (!MONGO_URI) {
+    console.error('ERROR: MONGO_URI environment variable is not set!');
+    process.exit(1);
+}
+
+const PORT = process.env.PORT || 5000;
+
 mongoose
-    .connect(process.env.MONGO_URI)
+    .connect(MONGO_URI)
     .then(() => {
         console.log('Connected to MongoDB');
-        app.listen(process.env.PORT || 5000, () => {
-            console.log(`Server running on port ${process.env.PORT || 5000}`);
+        app.listen(PORT, '0.0.0.0', () => {
+            console.log(`Server running on port ${PORT}`);
         });
     })
     .catch((err) => {
