@@ -1,5 +1,5 @@
 {
-    "buildCommand": "npm run build -- --configuration production",
+    "buildCommand": "chmod +x ./node_modules/.bin/ng && ./node_modules/.bin/ng build --configuration production",
     "outputDirectory": "dist/frontend",
     "installCommand": "npm install",
     "rewrites": [
