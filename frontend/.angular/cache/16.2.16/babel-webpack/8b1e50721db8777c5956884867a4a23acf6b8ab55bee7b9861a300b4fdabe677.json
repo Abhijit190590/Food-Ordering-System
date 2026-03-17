@@ -1,0 +1,1 @@
+{"ast":null,"code":"export const environment = {\n  production: true,\n  apiUrl: 'https://food-ordering-system-o6uk.onrender.com/api'\n};","map":null,"metadata":{},"sourceType":"module","externalDependencies":[]}

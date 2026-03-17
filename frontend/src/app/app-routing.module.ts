@@ -39,12 +39,22 @@ const routes: Routes = [
     {
         path: 'admin/add-restaurant',
         loadChildren: () => import('./components/admin/add-restaurant/add-restaurant.module').then(m => m.AddRestaurantModule),
-        canActivate: [AuthGuard, AdminGuard]
+        canActivate: [AuthGuard]
     },
     {
         path: 'admin/add-menu-item',
         loadChildren: () => import('./components/admin/add-menu-item/add-menu-item.module').then(m => m.AddMenuItemModule),
+        canActivate: [AuthGuard]
+    },
+    {
+        path: 'admin/approve-restaurants',
+        loadChildren: () => import('./components/admin/approve-restaurants/approve-restaurants.module').then(m => m.ApproveRestaurantsModule),
         canActivate: [AuthGuard, AdminGuard]
+    },
+    {
+        path: 'profile',
+        loadChildren: () => import('./components/profile/profile.module').then(m => m.ProfileModule),
+        canActivate: [AuthGuard]
     },
     { path: '**', redirectTo: '/home' }
 ];

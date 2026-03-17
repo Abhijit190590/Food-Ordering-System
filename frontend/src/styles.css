@@ -165,6 +165,11 @@ select {
     color: rgba(255, 255, 255, 0.3);
 }
 
+.form-group select option {
+    background-color: #1a1a2e;
+    color: #e0e0e0;
+}
+
 /* ===== Tags ===== */
 .tag {
     display: inline-block;

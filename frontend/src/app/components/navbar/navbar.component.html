@@ -13,11 +13,12 @@
                     🛒 Cart
                     <span class="cart-badge" *ngIf="cartCount > 0">{{cartCount}}</span>
                 </a>
+                <a routerLink="/admin/add-restaurant" routerLinkActive="active" (click)="menuOpen=false">Add Restaurant</a>
+                <a routerLink="/admin/add-menu-item" routerLinkActive="active" (click)="menuOpen=false">Add Item</a>
                 <ng-container *ngIf="authService.isAdmin">
-                    <a routerLink="/admin/add-restaurant" routerLinkActive="active" (click)="menuOpen=false">Add
-                        Restaurant</a>
-                    <a routerLink="/admin/add-menu-item" routerLinkActive="active" (click)="menuOpen=false">Add Item</a>
+                    <a routerLink="/admin/approve-restaurants" routerLinkActive="active" (click)="menuOpen=false">Approve Restaurants</a>
                 </ng-container>
+                <a routerLink="/profile" routerLinkActive="active" (click)="menuOpen=false">My Profile</a>
                 <button class="btn-logout" (click)="logout(); menuOpen=false">Logout</button>
                 <span class="user-name">👤 {{currentUser?.name}}</span>
             </ng-container>

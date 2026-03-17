@@ -14,6 +14,14 @@ export class RestaurantService {
         return this.http.get<Restaurant[]>(this.apiUrl);
     }
 
+    getMy(): Observable<Restaurant[]> {
+        return this.http.get<Restaurant[]>(`${this.apiUrl}/my`);
+    }
+
+    getAdminAll(): Observable<Restaurant[]> {
+        return this.http.get<Restaurant[]>(`${this.apiUrl}/admin/all`);
+    }
+
     getById(id: string): Observable<Restaurant> {
         return this.http.get<Restaurant>(`${this.apiUrl}/${id}`);
     }
@@ -24,5 +32,9 @@ export class RestaurantService {
 
     delete(id: string): Observable<any> {
         return this.http.delete(`${this.apiUrl}/${id}`);
+    }
+
+    approve(id: string): Observable<Restaurant> {
+        return this.http.put<Restaurant>(`${this.apiUrl}/${id}/approve`, {});
     }
 }

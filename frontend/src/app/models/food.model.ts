@@ -7,6 +7,8 @@ export interface Restaurant {
     rating: number;
     deliveryTime: string;
     minOrder: number;
+    isApproved?: boolean;
+    createdAt?: string;
 }
 
 export interface MenuItem {

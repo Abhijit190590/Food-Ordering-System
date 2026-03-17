@@ -1,0 +1,42 @@
+<div class="admin-page fade-in">
+    <div class="admin-header">
+        <h2>Approve Restaurants</h2>
+        <p>Review and approve new restaurant registrations</p>
+    </div>
+
+    <div class="alert alert-error" *ngIf="error">{{error}}</div>
+    
+    <div *ngIf="loading" class="loading">Loading restaurants...</div>
+    
+    <div class="table-container" *ngIf="!loading">
+        <table class="admin-table">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Cuisine</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let restaurant of restaurants">
+                    <td>{{restaurant.name}}</td>
+                    <td>{{restaurant.cuisineType}}</td>
+                    <td>
+                        <span class="status-badge" [class.status-approved]="restaurant.isApproved" [class.status-pending]="!restaurant.isApproved">
+                            {{restaurant.isApproved ? 'Approved' : 'Pending'}}
+                        </span>
+                    </td>
+                    <td>
+                        <button class="btn btn-sm btn-primary" (click)="approveRestaurant(restaurant._id)" [disabled]="restaurant.isApproved">
+                            {{restaurant.isApproved ? 'Approved' : 'Approve'}}
+                        </button>
+                    </td>
+                </tr>
+                <tr *ngIf="restaurants.length === 0">
+                    <td colspan="4" class="text-center">No restaurants found.</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

@@ -13,11 +13,19 @@ router.get('/:restaurantId', async (req, res) => {
     }
 });
 
-// POST /api/menu - add menu item (admin only)
+// POST /api/menu - add menu item (admin or restaurant owner)
 router.post('/', auth, async (req, res) => {
     try {
-        if (req.user.role !== 'admin') return res.status(403).json({ message: 'Admin access required' });
         const { name, description, price, imageUrl, category, isVeg, restaurant } = req.body;
+        
+        if (req.user.role !== 'admin') {
+            const Restaurant = require('../models/Restaurant');
+            const targetRestaurant = await Restaurant.findById(restaurant);
+            if (!targetRestaurant || targetRestaurant.createdBy.toString() !== req.user.id) {
+                return res.status(403).json({ message: 'Not authorized to add items to this restaurant' });
+            }
+        }
+
         const item = new MenuItem({ name, description, price, imageUrl, category, isVeg, restaurant });
         await item.save();
         res.status(201).json(item);

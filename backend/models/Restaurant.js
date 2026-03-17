@@ -9,6 +9,7 @@ const restaurantSchema = new mongoose.Schema(
         rating: { type: Number, default: 4.0, min: 0, max: 5 },
         deliveryTime: { type: String, default: '30-45 mins' },
         minOrder: { type: Number, default: 100 },
+        isApproved: { type: Boolean, default: false },
         createdBy: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
     },
     { timestamps: true }

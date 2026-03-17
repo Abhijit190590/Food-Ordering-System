@@ -41,6 +41,12 @@ export class AuthService {
         );
     }
 
+    updateProfile(data: { name?: string; email?: string; password?: string }): Observable<AuthResponse> {
+        return this.http.put<AuthResponse>(`${this.apiUrl}/profile`, data).pipe(
+            tap((res) => this.handleAuth(res))
+        );
+    }
+
     private handleAuth(res: AuthResponse) {
         localStorage.setItem('token', res.token);
         localStorage.setItem('user', JSON.stringify(res.user));

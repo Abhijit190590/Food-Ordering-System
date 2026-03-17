@@ -1,0 +1,13 @@
+.profile-card {
+    max-width: 500px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+.profile-actions {
+    margin-top: 1.5rem;
+}
+
+.btn-full {
+    width: 100%;
+}

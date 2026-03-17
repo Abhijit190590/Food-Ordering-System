@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MenuService } from '../../../services/menu.service';
 import { RestaurantService } from '../../../services/restaurant.service';
 import { Restaurant } from '../../../models/food.model';
+import { AuthService } from '../../../services/auth.service';
 
 @Component({
     selector: 'app-add-menu-item',
@@ -21,10 +22,18 @@ export class AddMenuItemComponent implements OnInit {
     success = '';
     loading = false;
 
-    constructor(private menuService: MenuService, private restaurantService: RestaurantService) { }
+    constructor(
+        private menuService: MenuService, 
+        private restaurantService: RestaurantService,
+        public authService: AuthService
+    ) { }
 
     ngOnInit() {
-        this.restaurantService.getAll().subscribe(r => this.restaurants = r);
+        if (this.authService.isAdmin) {
+            this.restaurantService.getAdminAll().subscribe((r: Restaurant[]) => this.restaurants = r);
+        } else {
+            this.restaurantService.getMy().subscribe((r: Restaurant[]) => this.restaurants = r);
+        }
     }
 
     onSubmit() {
